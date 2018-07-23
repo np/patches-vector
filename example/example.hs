@@ -78,7 +78,7 @@ arbClient logvar api (ClientData name goal) = do
       log "delay" delay
       threadDelay (1000000 * delay)
       log "version/old" v
-      log "termlist/old" s0
+      log "text/old" s0
       let d = diff s0 goal
       let es = toList d
       log "diff/old/goal" d
@@ -90,12 +90,12 @@ arbClient logvar api (ClientData name goal) = do
           fromList . pure <$> generate (elements es)
       log "patch/cur" patch
       let s1 = apply patch s0
-      log "termlist/cur" s1
+      log "text/cur" s1
       Versioned v' patch' <- _put api (Versioned v patch)
       log "version/new" v'
       log "patch/new" patch'
       let s2 = apply patch' s1
-      log "termlist/new" s2
+      log "text/new" s2
       go v' s2
 
 main :: IO ()
